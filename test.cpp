@@ -9,7 +9,7 @@ using namespace cv;
 
 void solve()
 {
-    VideoCapture video("videoplayback.mp4");
+    VideoCapture video(1);
     CascadeClassifier facedetect;
     Mat img;
     facedetect.load("haarcascade_frontalface_default.xml");
