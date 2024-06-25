@@ -7,9 +7,18 @@
 using namespace std;
 using namespace cv;
 
-void solve()
+int main()
 {
-    VideoCapture video(1);
+    // Open the video file
+    VideoCapture video("videoplayback.mp4");
+
+    // Check if the video file opened successfully
+    if (!video.isOpened())
+    {
+        cout << "Error opening video file" << endl;
+        return -1;
+    }
+
     CascadeClassifier facedetect;
     Mat img;
     facedetect.load("haarcascade_frontalface_default.xml");
@@ -17,6 +26,12 @@ void solve()
     while (true)
     {
         video.read(img);
+
+        // Break the loop if the video has ended
+        if (img.empty())
+        {
+            break;
+        }
 
         vector<Rect> faces;
 
@@ -32,11 +47,15 @@ void solve()
         }
 
         imshow("Frame", img);
-        waitKey(1);
+
+        // Break the loop if the 'q' key is pressed
+        if (waitKey(10) == 'q')
+        {
+            break;
+        }
     }
-}
-int main()
-{
-    solve();
+
+    video.release();
+    destroyAllWindows();
     return 0;
 }
